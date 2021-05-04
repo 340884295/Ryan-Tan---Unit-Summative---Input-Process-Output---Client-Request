@@ -1,0 +1,253 @@
+/**************************************************************************
+Program Name: Catering Company Billing Program
+Assignment Name: Unit 2 Summative -Conditionals - Client Request
+Instructor: S. Gaffoor
+Course Code: ICS3U1-22
+
+Author: Ryan Tan
+Version: 1.0
+
+Program Description: Greet user and asks for day of week,
+amount of adults, amount of children, meal plan (standard 
+or deluxe), banquet hall (A, B, C, D, or E), if payment is
+within 10 days, and initial deposit amount. Using this info,
+calculates (for some info) and displays meal hall, hall 
+cost, number of adults, number of children, meal type, price
+per adult, price per child, meal day, surcharge (if any), 
+adult total cost, child total cost, tip and tax, discount, 
+initial deposit, final total.
+
+Assumptions and limitations:
+- Expect that the user enters in the expected data type (double, string, etc)
+- Expect that the user can read
+- Expect that the user can type
+- Expect that the user understands the concept of the 7 days in a week
+- Expect that the user enters an initial deposit less than or equal to the total bill before discounts
+- Cannot display hundredths digit if it's a zero
+
+**************************************************************************/
+import java.util.Scanner; //Importing class that allows for user input in the program
+import java.lang.Math; //Importing class that expands the usability of math in the program
+
+public class Main {
+	
+	public static void main(String[] args) {
+		
+		
+		
+		//INITIALIZATION SECTION// - Initializing some variables of the program
+		
+		double adultCost = 0;
+		double perAdultCost = 0;
+		double childCost = 0;
+		double perChildCost = 0;
+		double hallCost = 0;
+		double taxTip = 0;
+		double taxTipTotal = 0;
+		double preDiscDepTotal = 0;
+		double surchargeTotal = 0;
+		double surcharge = 0;
+		double discount = 0;
+		double finalTotal = 0;
+		
+		
+		
+		//USER INPUT SECTION// - Initializing the rest of the program's variables through user input 
+		
+		//	Opening scanner
+		Scanner scanner = new Scanner(System.in);
+		
+		//	 Greeting the user
+		System.out.println("Welcome to our Catering Company!\n");
+
+		//	Asking user for the day of the week
+		System.out.println("What day of the week is it today? ");
+		String dayWeek = scanner.nextLine();
+
+		//	Ask user for number of adults
+		System.out.println("How many adults are there? (16 and over) ");
+		int adultNum = scanner.nextInt();
+		
+		//	Ask user for number of children
+		System.out.println("How many children are there? (under 16) ");
+		int childNum = scanner.nextInt();
+		scanner.nextLine();
+		
+		//	Ask user what meal plan they chose
+		System.out.println("Which meal plan did you choose? (standard or deluxe) ");
+		String mealPlan = scanner.nextLine();
+		
+		//	Ask user for hall letter
+		System.out.println("Which banquet hall did you choose? (A, B, C, D, or E) ");
+		String hallName = scanner.nextLine();
+		
+		//	Ask if user will pay within 10 days
+		System.out.println("Will your payment occur within 10 days? (yes or no) ");
+		String earlyPay = scanner.nextLine();
+		
+		//	Ask user what their early deposit was
+		System.out.println("What was your initial deposit in dollars? (enter 0 if none)" );
+		double initialDep = scanner.nextInt();
+	
+		//	Closing scanner	
+		scanner.close();
+
+		
+		
+	    //CALCULATIONS SECTION// - Calculating variables essential for the user's knowledge
+		
+		//	Determining adult and child meal costs for standard meals
+		if (mealPlan.equalsIgnoreCase("standard")) {
+			adultCost = adultNum*11.75;
+			perAdultCost = adultCost/adultNum;
+			childCost = perAdultCost*0.6*childNum;
+			perChildCost = childCost/childNum;
+			
+		//	Determining adult and child meal costs for deluxe meals	
+		} else if (mealPlan.equalsIgnoreCase("deluxe")) {
+			adultCost = adultNum*15.80;
+			perAdultCost = adultCost/adultNum;
+			childCost = perAdultCost*0.6*childNum;
+			perChildCost = childCost/childNum;
+			
+		//	Rejecting input that cannot be processed by the program
+		} else {
+			System.out.println("INVALID INPUT! Please input either standard or deluxe as a meal plan");
+			System.exit(0);	
+		}
+		
+		
+		//	Determining cost for banquet hall A
+		if (hallName.equalsIgnoreCase("A")) {
+			hallCost = 55.00;
+
+		//	Determining cost for banquet hall B	
+		} else if (hallName.equalsIgnoreCase("B")) {
+			hallCost = 75.00;
+		
+		//	Determining cost for banquet hall C		
+		} else if (hallName.equalsIgnoreCase("C")) {
+			hallCost = 85.00;
+			
+		//	Determining cost for banquet hall D		
+		} else if (hallName.equalsIgnoreCase("D")) {
+			hallCost = 100.00;
+		
+		//	Determining cost for banquet hall E		
+		} else if (hallName.equalsIgnoreCase("E")) {
+			hallCost = 130.00;
+			
+		//	Rejecting input that cannot be processed by the program			
+		} else {
+			System.out.println("INVALID INPUT! Please input a hall letter from A to E");
+			System.exit(0);	
+		}
+		
+		
+		//	Determining total before calculating surcharge, discount and initial deposit
+		taxTip = (adultCost + childCost)*0.18;
+		taxTipTotal = (adultCost + childCost)*1.18;
+		
+	
+		//	Determining value of surcharge if applicable (depending on the day of the week)
+		if (dayWeek.equalsIgnoreCase("monday") || dayWeek.equalsIgnoreCase("tuesday") || dayWeek.equalsIgnoreCase("wednesday") || dayWeek.equalsIgnoreCase("thursday")) {
+			preDiscDepTotal = taxTipTotal + hallCost;
+			
+		//	Determining value of surcharge if applicable (depending on the day of the week)		
+		} else if (dayWeek.equalsIgnoreCase("friday") || dayWeek.equalsIgnoreCase("saturday") || dayWeek.equalsIgnoreCase("sunday")) {
+			surchargeTotal = (taxTipTotal + hallCost)*1.07;
+			surcharge = (surchargeTotal - (taxTipTotal + hallCost));
+			preDiscDepTotal = surchargeTotal;
+			
+		//	Rejecting input that cannot be processed by the program				
+		} else {
+			System.out.println("INVALID INPUT! Please input a valid day of the week");
+			System.exit(0);	
+		}
+		
+		
+		//	Determining if discount is applicable
+		if (earlyPay.equalsIgnoreCase("yes")) {
+			
+			//	Determining discount percentage then discount amount
+			if (preDiscDepTotal >= 800.00) {
+				discount = preDiscDepTotal*0.05;
+				
+			//	Determining discount percentage then discount amount
+			} else if (preDiscDepTotal >= 400.00 && preDiscDepTotal < 800.00) {
+				discount = preDiscDepTotal*0.04;
+			
+			//	Determining discount percentage then discount amount	
+			} else if (preDiscDepTotal >= 200.00 && preDiscDepTotal < 400.00) {
+				discount = preDiscDepTotal*0.03;
+				
+			//	Determining discount percentage then discount amount
+			} else if (preDiscDepTotal >= 100.00 && preDiscDepTotal < 200.00) {
+				discount = preDiscDepTotal*0.015;
+
+			//	Determining discount percentage then discount amount
+			} else {
+				discount = preDiscDepTotal*0.005;
+			}
+			
+		//	Rejecting input that cannot be processed by the program		
+		} else if (!earlyPay.equalsIgnoreCase("no")) {
+			System.out.println("INVALID INPUT! Please input ");
+			System.exit(0);	
+		}
+		
+		
+		//	Determining final total bill
+		finalTotal = preDiscDepTotal - discount - initialDep;
+		
+		
+		
+		//OUTPUT SECTION// - Displaying all variables essential for the user's knowledge, rounding applicable variables to nearest hundredths
+		
+		System.out.println("\nCatering Company - Customer Receipt");
+		
+		System.out.println("Room Type: "+hallName);
+		
+		hallCost = Math.round(hallCost*100.00)/100.00; //This is an example of how the rounding system works
+		System.out.println("Room Cost: "+hallCost); 
+		
+		System.out.println("Number of Adults: "+adultNum);
+		
+		System.out.println("Number of Children: "+childNum);
+		System.out.println("Meal Type: "+mealPlan);
+		
+		perAdultCost = Math.round(perAdultCost*100.00)/100.00;
+		System.out.println("Meal Cost per Adult: "+perAdultCost);
+		
+		perChildCost = Math.round(perChildCost*100.00)/100.00;
+		System.out.println("Meal Cost per Child: "+perChildCost);
+		
+		System.out.println("Day of the Week: "+dayWeek);
+		
+		surcharge = Math.round(surcharge*100.00)/100.00;
+		System.out.println("Surcharge: "+surcharge);
+		
+		adultCost = Math.round(adultCost*100.00)/100.00;
+		System.out.println("Total Adult Meal Cost: "+adultCost);
+		
+		childCost = Math.round(childCost*100.00)/100.00;
+		System.out.println("Total Child Meal Cost: "+childCost);
+		
+		taxTip = Math.round(taxTip*100.00)/100.00;
+		System.out.println("Tax and Tip: "+taxTip);
+		
+		discount = Math.round(discount*100.00)/100.00;
+		System.out.println("Discount: "+discount);
+		
+		initialDep = Math.round(initialDep*100.00)/100.00;
+		System.out.println("Initial Deposit: "+initialDep);
+		
+		preDiscDepTotal = Math.round(preDiscDepTotal*100.00)/100.00;
+		System.out.println("Total Bill before Discount & Deposit: "+preDiscDepTotal);
+		
+		finalTotal = Math.round(finalTotal*100.00)/100.00;
+		System.out.println("Final Total Bill: "+finalTotal);
+
+			
+	}
+}
