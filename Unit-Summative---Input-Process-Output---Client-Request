@@ -58,7 +58,7 @@ public class Main {
 		Scanner scanner = new Scanner(System.in);
 		
 		//	 Greeting the user
-		System.out.println("Welcome to Catering Company!");
+		System.out.println("Welcome to our Catering Company!\n");
 
 		//	Asking user for the day of the week
 		System.out.println("What day of the week is it today? ");
@@ -169,7 +169,7 @@ public class Main {
 		//	Determining if discount is applicable
 		if (earlyPay.equalsIgnoreCase("yes")) {
 			
-		//	Determining discount percentage then discount amount
+			//	Determining discount percentage then discount amount
 			if (preDiscDepTotal >= 800.00) {
 				discount = preDiscDepTotal*0.05;
 				
@@ -204,7 +204,7 @@ public class Main {
 		
 		//OUTPUT SECTION// - Displaying all variables essential for the user's knowledge, rounding applicable variables to nearest hundredths
 		
-		System.out.println("\n Catering Company - Customer Receipt");
+		System.out.println("\nCatering Company - Customer Receipt");
 		
 		System.out.println("Room Type: "+hallName);
 		
