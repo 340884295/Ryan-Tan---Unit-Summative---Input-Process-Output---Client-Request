@@ -144,7 +144,7 @@ public class Main {
 		}
 		
 		
-		//	Determining total before calculating surcharge, discount and initial deposit
+		//	Determining tax and the total before calculating surcharge, discount and initial deposit
 		taxTip = (adultCost + childCost)*0.18;
 		taxTipTotal = (adultCost + childCost)*1.18;
 		
